@@ -1,60 +1,59 @@
 const User = require('../models/User')
-const bcrypt = require('bcryptjs')
+const generateToken = require("../utils/generateToken")
 const asyncHandler = require("express-async-handler")
-const passport = require('passport')
 
-exports.signup = asyncHandler(async (req, res) => {
+const authUser = asyncHandler(async (req,res) => {
 	try {
-		const { email, password } = req.body
-
-		if (!email || !password) {
-			res.status(403).json({ message: 'Plead write email and password' })
+		
+		const {email, password} = req.body
+	
+		const user = await User.findOne({email})
+	
+		if(user && (await user.matchPassword(password))) {
+			res.json({
+				_id:user._id,
+				username: user.username,
+				email:user.email,
+				token:generateToken(user._id),
+	
+			})
 		}
-		const user = await User.findOne({ email })
+	} catch (error) {
+		res.status(401).json({message: `${error}`})
+	}
+})
 
-		if (user) {
-			return res.status(400).json({ message: 'This user already exists' })
+const registerUser = asyncHandler(async(req,res) => {
+	try {
+		const userExists = await User.findOne({email})
+
+		if(userExists) {
+			res.status(400).json({message: `This user already exist ${userExists}`.red})
 		}
 
-		const hassPass = bcrypt.hashSync(password, bcrypt.genSaltSync(12))
-
-		const newUser = await User.create({
+		const user = await User.create({
+			username,
 			email,
-			password: hassPass,
+			password,
 		})
 
-		newUser.password = null
-
-		res.status(201).json(newUser)
+		if(user) {
+			res.status(201).json({
+				_id: user._id,
+				username: user.username,
+				email: user.email,
+				token: generateToken(user._id),
+			})
+		}
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
 
-exports.login = asyncHandler(async (req, res, next) => {
-	passport.authenticate('local', (err, user, failureDetails) => {
-		if (err) {
-			return res.status(500).json({ message: `${err}` })
-		}
-		if (!user) {
-			return res.status(401).json(failureDetails)
-		}
-
-		res.login(user, err => {
-			if (err) {
-				return status(500).json({ message: 'Something went wrong' })
-			}
-			user.password = null
-			res.status(200).json(user)
-		})
-	})(req, res, next)
+const getUserProfile = asyncHandler(async(req,res) => {
+	try {
+		
+	} catch (error) {
+		
+	}
 })
-
-exports.currentUser = async (req, res) => {
-	res.json(req.user || null)
-}
-
-exports.logout = (req, res) => {
-	req.logout()
-	res.status(200).json({ message: 'Logget Out' })
-}

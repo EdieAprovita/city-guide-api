@@ -80,9 +80,9 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 			const updatedUser = await user.save()
 
 			res.json({
-				_id: updateUser._id,
-				username: updateUser.username,
-				email: updateUser.email,
+				_id: updatedUser._id,
+				username: updatedUser.username,
+				email: updatedUser.email,
 				token: generateToken(updatedUser._id),
 			})
 		}
@@ -113,34 +113,35 @@ export const deleteUser = asyncHandler(async (req, res) => {
 	}
 })
 
-export const getUserById = asyncHandler(async(req,res) => {
+export const getUserById = asyncHandler(async (req, res) => {
 	try {
-		const user = await User.findById(req.params.id).select("-password")
+		const user = await User.findById(req.params.id).select('-password')
 
-		if(user) {
+		if (user) {
 			res.status(200).json(user)
 		}
 	} catch (error) {
-				res.status(404).json({ message: `${error}`.red })
-
+		res.status(404).json({ message: `${error}`.red })
 	}
 })
 
-export const updateUser = asyncHandler(async(req,res) => {
+export const updateUser = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id)
 
-		if(user) {
+		if (user) {
 			user.username = req.body.username || user.username
 			user.email = req.body.email || user.email
-			
+
 			const updatedUser = await user.save()
 
 			res.status(200).json({
-				
+				_id: updatedUser._id,
+				username: updatedUser.username,
+				email: updatedUser.email,
 			})
 		}
 	} catch (error) {
-		
+		res.status(404).json({ message: `${error}`.red })
 	}
 })

@@ -2,7 +2,7 @@ const User = require('../models/User')
 const generateToken = require('../utils/generateToken')
 const asyncHandler = require('express-async-handler')
 
-export const authUser = asyncHandler(async (req, res) => {
+exports.authUser = asyncHandler(async (req, res) => {
 	try {
 		const { email, password } = req.body
 
@@ -21,7 +21,7 @@ export const authUser = asyncHandler(async (req, res) => {
 	}
 })
 
-export const registerUser = asyncHandler(async (req, res) => {
+exports.registerUser = asyncHandler(async (req, res) => {
 	try {
 		const userExists = await User.findOne({ email })
 
@@ -48,7 +48,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 	}
 })
 
-export const getUserProfile = asyncHandler(async (req, res) => {
+exports.getUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.user._id)
 
@@ -65,7 +65,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 	}
 })
 
-export const updateUserProfile = asyncHandler(async (req, res) => {
+exports.updateUserProfile = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.user._id)
 
@@ -91,7 +91,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 	}
 })
 
-export const getUser = asyncHandler(async (req, res) => {
+exports.getUsers = asyncHandler(async (req, res) => {
 	try {
 		const users = await User.find({})
 		res.status(200).json(users)
@@ -100,7 +100,7 @@ export const getUser = asyncHandler(async (req, res) => {
 	}
 })
 
-export const deleteUser = asyncHandler(async (req, res) => {
+exports.deleteUser = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id)
 
@@ -113,7 +113,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 	}
 })
 
-export const getUserById = asyncHandler(async (req, res) => {
+exports.getUserById = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id).select('-password')
 
@@ -125,7 +125,7 @@ export const getUserById = asyncHandler(async (req, res) => {
 	}
 })
 
-export const updateUser = asyncHandler(async (req, res) => {
+exports.updateUser = asyncHandler(async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id)
 

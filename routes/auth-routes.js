@@ -1,11 +1,26 @@
 const express = require('express')
 const authroutes = express.Router()
 
-const { signup, login, logout, currentUser } = require('../controllers/auth')
+const {
+	authUser,
+	registerUser,
+	getUserProfile,
+	updateUserProfile,
+	getUsers,
+	deleteUser,
+	getUserById,
+	updateUser,
+} = require('../controllers/auth')
 
-authroutes.post('/login', login)
-authroutes.post('/signup', signup)
-authroutes.get('/current-user', currentUser)
-authroutes.get('/logout', logout)
+const { protect } = require('../middleware/authMiddleware')
+
+authroutes.route('/').post(registerUser).get(protect, getUsers)
+authroutes.post('/login', authUser)
+authroutes.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile)
+authroutes
+	.route('/:id')
+	.delete(protect, deleteUser)
+	.get(protect, getUserById)
+	.put(protect, updateUser)
 
 module.exports = authroutes

@@ -18,7 +18,7 @@ const { protect } = require('../middleware/authMiddleware')
 
 authroutes.get('/', (protect, getUsers))
 authroutes.get('/profile', (protect, getUserProfile))
-authroutes.get('/:id', (protect, deleteUser))
+authroutes.get('/:id', (protect, getUserById))
 authroutes.post('/', registerUser)
 authroutes.post('/login', authUser)
 authroutes.put('/profile', (protect, updateUserProfile))

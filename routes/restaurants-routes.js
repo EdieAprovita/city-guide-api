@@ -12,6 +12,8 @@ const {
 	createRestaurantReview,
 } = require('../controllers/restaurants')
 
+const { protect } = '../middleware/authMiddleware'
+
 router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 	if (!req.file) {
 		next(new Error('No file uploades'))
@@ -24,9 +26,9 @@ router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 router.get('/', getAllRestaurants)
 router.get('/:id', getRestaurant)
 router.get('/top', getTopRestaurants)
-router.post('/:id/reviews', createRestaurantReview)
-router.post('/create', createRestaurant)
-router.put('/edit/:id', updateRestaurant)
-router.delete('/delete/:id', deleteRestaurant)
+router.post('/:id/reviews', (protect, createRestaurantReview))
+router.post('/create', (protect, createRestaurant))
+router.put('/edit/:id', (protect, updateRestaurant))
+router.delete('/delete/:id', (protect, deleteRestaurant))
 
 module.exports = router

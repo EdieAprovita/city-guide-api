@@ -3,15 +3,17 @@ const router = express.Router()
 const uploadConfig = require('../config/cloudinary')
 const { getTopMarkets } = require('../controllers/markets')
 
-const { 
-	getAllRecipes, 
-	getRecipe, 
-	createRecipe, 
-	updateRecipe, 
-	deleteRecipe, 
-	getTopRecipes, 
-	createRecipeReview 
+const {
+	getAllRecipes,
+	getRecipe,
+	createRecipe,
+	updateRecipe,
+	deleteRecipe,
+	getTopRecipes,
+	createRecipeReview,
 } = require('../controllers/recipes')
+
+const { protect } = '../middleware/authMiddleware'
 
 router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 	if (!req.file) {
@@ -25,9 +27,9 @@ router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 router.get('/', getAllRecipes)
 router.get('/:id', getRecipe)
 router.get('/top', getTopRecipes)
-router.post('/create', createRecipe)
-router.post('/:id/reviews', createRecipeReview)
-router.put('/edit/:id', updateRecipe)
-router.delete('/delete/:id', deleteRecipe)
+router.post('/create', (protect, createRecipe))
+router.post('/:id/reviews', (protect, createRecipeReview))
+router.put('/edit/:id', (protect, updateRecipe))
+router.delete('/delete/:id', (protect, deleteRecipe))
 
 module.exports = router

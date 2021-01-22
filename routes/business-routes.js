@@ -12,6 +12,8 @@ const {
 	getTopBusiness,
 } = require('../controllers/business')
 
+const { protect } = '../middleware/authMiddleware'
+
 router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 	if (!req.file) {
 		next(new Error('No file uploades'))
@@ -22,11 +24,11 @@ router.post('/upload', uploadConfig.single('photo'), (req, res, next) => {
 //CRUD BUSINESS
 
 router.get('/', getAllBusiness)
-router.get('/:id', getBusiness)
 router.get('/top', getTopBusiness)
-router.post('/:id/reviews', createBusinessReview)
-router.post('/create', createBusiness)
-router.put('/edit/:id', updateBusiness)
-router.delete('/delete/:id', deleteBusiness)
+router.get('/:id', getBusiness)
+router.post('/create', (protect, createBusiness))
+router.post('/:id/reviews', (protect, createBusinessReview))
+router.put('/edit/:id', (protect, updateBusiness))
+router.delete('/delete/:id', (protect, deleteBusiness))
 
 module.exports = router

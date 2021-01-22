@@ -53,7 +53,7 @@ const restaurant = require('./routes/restaurants-routes')
 app.use('/api/restaurants', restaurant)
 
 const user = require('./routes/auth-routes')
-app.use('/auth', user)
+app.use('/api/auth', user)
 
 const market = require('./routes/markets-routes')
 app.use('/api/markets', market)

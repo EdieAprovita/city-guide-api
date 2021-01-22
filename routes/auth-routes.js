@@ -14,13 +14,15 @@ const {
 
 const { protect } = require('../middleware/authMiddleware')
 
-authroutes.route('/').post(registerUser).get(protect, getUsers)
+//AUTH ROUTES
+
+authroutes.get('/', (protect, getUsers))
+authroutes.get('/profile', (protect, getUserProfile))
+authroutes.get('/:id', (protect, deleteUser))
+authroutes.post('/', registerUser)
 authroutes.post('/login', authUser)
-authroutes.route('/profile').get(protect, getUserProfile).put(protect, updateUserProfile)
-authroutes
-	.route('/:id')
-	.delete(protect, deleteUser)
-	.get(protect, getUserById)
-	.put(protect, updateUser)
+authroutes.put('/profile', (protect, updateUserProfile))
+authroutes.put('/:id', (protect, updateUser))
+authroutes.delete('/:id', (protect, deleteUser))
 
 module.exports = authroutes

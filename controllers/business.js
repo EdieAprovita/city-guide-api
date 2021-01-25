@@ -1,6 +1,10 @@
 const Business = require('../models/Business')
 const asyncHandler = require('express-async-handler')
 
+// @desc    Fetch all businnesses
+// @route   GET /api/businnesses
+// @access  Public
+
 exports.getAllBusiness = asyncHandler(async (req, res) => {
 	try {
 		const business = await Business.find().populate('User')
@@ -9,6 +13,10 @@ exports.getAllBusiness = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Fetch single business
+// @route   GET /api/businesses/:id
+// @access  Public
 
 exports.getBusiness = asyncHandler(async (req, res) => {
 	try {
@@ -19,6 +27,10 @@ exports.getBusiness = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Create a business
+// @route   POST /api/businesses
+// @access  Private/Admin
 
 exports.createBusiness = asyncHandler(async (req, res) => {
 	try {
@@ -37,6 +49,10 @@ exports.createBusiness = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update a business
+// @route   PUT /api/businesses/:id
+// @access  Private/Admin
+
 exports.updateBusiness = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -54,6 +70,10 @@ exports.updateBusiness = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Delete a business
+// @route   DELETE /api/businesses/:id
+// @access  Private/Admin
+
 exports.deleteBusiness = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -63,6 +83,10 @@ exports.deleteBusiness = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Create new review
+// @route   POST /api/businesses/:id/reviews
+// @access  Private
 
 exports.createBusinessReview = asyncHandler(async (req, res) => {
 	try {
@@ -100,6 +124,10 @@ exports.createBusinessReview = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Get top rated businesses
+// @route   GET /api/businesses/top
+// @access  Public
 
 exports.getTopBusiness = asyncHandler(async (req, res) => {
 	try {

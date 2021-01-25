@@ -59,7 +59,7 @@ const market = require('./routes/markets-routes')
 app.use('/api/markets', market)
 
 const business = require('./routes/business-routes')
-app.use('/api/business', business)
+app.use('/api/businesses', business)
 
 // Uncomment this line for production
 // app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));

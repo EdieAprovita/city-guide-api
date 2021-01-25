@@ -1,5 +1,4 @@
-const express = require('express')
-const authroutes = express.Router()
+const authroutes = require('express').Router()
 
 const {
 	authUser,

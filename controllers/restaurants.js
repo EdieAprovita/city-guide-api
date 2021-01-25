@@ -1,6 +1,10 @@
 const Restaurant = require('../models/Restaurant')
 const asyncHandler = require('express-async-handler')
 
+// @desc    Fetch all restaurants
+// @route   GET /api/restaurants
+// @access  Public
+
 exports.getAllRestaurants = asyncHandler(async (req, res) => {
 	try {
 		const restaurant = await Restaurant.find().populate('User')
@@ -9,6 +13,10 @@ exports.getAllRestaurants = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Fetch single restaurant
+// @route   GET /api/restaurants/:id
+// @access  Public
 
 exports.getRestaurant = asyncHandler(async (req, res) => {
 	try {
@@ -19,6 +27,10 @@ exports.getRestaurant = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Create a restaurant
+// @route   POST /api/restaurants
+// @access  Private/Admin
 
 exports.createRestaurant = asyncHandler(async (req, res) => {
 	try {
@@ -38,6 +50,10 @@ exports.createRestaurant = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update a restaurant
+// @route   PUT /api/restaurants/:id
+// @access  Private/Admin
+
 exports.updateRestaurant = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -55,6 +71,10 @@ exports.updateRestaurant = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Delete a restaurant
+// @route   DELETE /api/restaurants/:id
+// @access  Private/Admin
+
 exports.deleteRestaurant = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -64,6 +84,10 @@ exports.deleteRestaurant = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Create new review
+// @route   POST /api/restaurants/:id/reviews
+// @access  Private
 
 exports.createRestaurantReview = asyncHandler(async (req, res) => {
 	try {
@@ -101,6 +125,10 @@ exports.createRestaurantReview = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Get top rated restaurants
+// @route   GET /api/restaurants/top
+// @access  Public
 
 exports.getTopRestaurants = asyncHandler(async (req, res) => {
 	try {

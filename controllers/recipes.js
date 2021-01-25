@@ -1,6 +1,10 @@
 const Recipe = require('../models/Recipe')
 const asyncHandler = require('express-async-handler')
 
+// @desc    Fetch all recipes
+// @route   GET /api/recipes
+// @access  Public
+
 exports.getAllRecipes = asyncHandler(async (req, res) => {
 	try {
 		const recipes = await Recipe.find().populate('User')
@@ -9,6 +13,10 @@ exports.getAllRecipes = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Fetch single recipe
+// @route   GET /api/recipes/:id
+// @access  Public
 
 exports.getRecipe = asyncHandler(async (req, res) => {
 	try {
@@ -19,6 +27,10 @@ exports.getRecipe = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Create a market
+// @route   POST /api/markets
+// @access  Private/Admin
 
 exports.createRecipe = asyncHandler(async (req, res) => {
 	try {
@@ -54,6 +66,10 @@ exports.createRecipe = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update a market
+// @route   PUT /api/markets/:id
+// @access  Private/Admin
+
 exports.updateRecipe = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -85,6 +101,10 @@ exports.updateRecipe = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Delete a market
+// @route   DELETE /api/markets/:id
+// @access  Private/Admin
+
 exports.deleteRecipe = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -94,6 +114,10 @@ exports.deleteRecipe = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Create new review
+// @route   POST /api/recipes/:id/reviews
+// @access  Private
 
 exports.createRecipeReview = asyncHandler(async (req, res) => {
 	try {
@@ -131,6 +155,10 @@ exports.createRecipeReview = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}` })
 	}
 })
+
+// @desc    Get top rated markets
+// @route   GET /api/markets/top
+// @access  Public
 
 exports.getTopRecipes = asyncHandler(async (req, res) => {
 	try {

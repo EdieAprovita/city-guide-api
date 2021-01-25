@@ -1,6 +1,10 @@
 const Market = require('../models/Market')
 const asyncHandler = require('express-async-handler')
 
+// @desc    Fetch all markets
+// @route   GET /api/markets
+// @access  Public
+
 exports.getAllMarkets = asyncHandler(async (req, res) => {
 	try {
 		const markets = await Market.find().populate('User')
@@ -9,6 +13,10 @@ exports.getAllMarkets = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Fetch single market
+// @route   GET /api/market/:id
+// @access  Public
 
 exports.getMarket = asyncHandler(async (req, res) => {
 	try {
@@ -19,6 +27,10 @@ exports.getMarket = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Create a market
+// @route   POST /api/markets
+// @access  Private/Admin
 
 exports.createMarket = asyncHandler(async (req, res) => {
 	try {
@@ -37,6 +49,10 @@ exports.createMarket = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Update a market
+// @route   PUT /api/markets/:id
+// @access  Private/Admin
+
 exports.updateMarket = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -53,6 +69,10 @@ exports.updateMarket = asyncHandler(async (req, res) => {
 	}
 })
 
+// @desc    Delete a market
+// @route   DELETE /api/markets/:id
+// @access  Private/Admin
+
 exports.deleteMarket = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
@@ -62,6 +82,10 @@ exports.deleteMarket = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Create new review
+// @route   POST /api/markets/:id/reviews
+// @access  Private
 
 exports.createMarketReview = asyncHandler(async (req, res) => {
 	try {
@@ -99,6 +123,10 @@ exports.createMarketReview = asyncHandler(async (req, res) => {
 		res.status(400).json({ message: `${error}`.red })
 	}
 })
+
+// @desc    Get top rated markets
+// @route   GET /api/markets/top
+// @access  Public
 
 exports.getTopMarkets = asyncHandler(async (req, res) => {
 	try {

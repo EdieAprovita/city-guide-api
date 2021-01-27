@@ -21,7 +21,7 @@ exports.getAllBusiness = asyncHandler(async (req, res) => {
 exports.getBusiness = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
-		const business = await  Business.findById(id).populated('User')
+		const business = await Business.findById(id).populated('User')
 		res.status(200).json({ business })
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })

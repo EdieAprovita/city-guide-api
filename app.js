@@ -9,7 +9,6 @@ const path = require('path')
 const colors = require('colors')
 const cors = require('cors')
 const session = require('express-session')
-const passport = require('passport')
 
 mongoose
 	.connect(process.env.DB, {

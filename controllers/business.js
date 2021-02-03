@@ -7,8 +7,24 @@ const asyncHandler = require('express-async-handler')
 
 exports.getAllBusiness = asyncHandler(async (req, res) => {
 	try {
-		const business = await Business.find().populate('User')
-		res.status(200).json({ business })
+		const pageSize = 10
+		const page = Number(req.query.pageNumber) || 1
+
+		const keyword = req.query.pageNumber
+			? {
+					name: {
+						$regex: req.query.keyword,
+						$options: 'i',
+					},
+			  }
+			: {}
+
+		const count = await Business.countDocuments({ ...keyword })
+		const business = await Business.find({ ...keyword })
+			.limit(pageSize)
+			.skip(pageSize * (page - 1))
+
+		res.status(200).json({ business, page, pages: Math.ceil(count / pageSize) })
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
 	}
@@ -21,7 +37,7 @@ exports.getAllBusiness = asyncHandler(async (req, res) => {
 exports.getBusiness = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
-		const business = await Business.findById(id).populated('User')
+		const business = await Business.findById(id)
 		res.status(200).json({ business })
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
@@ -90,9 +106,9 @@ exports.deleteBusiness = asyncHandler(async (req, res) => {
 
 exports.createBusinessReview = asyncHandler(async (req, res) => {
 	try {
-		const { rating, comment } = req.body
+		const { rating, comment, id } = req.body
 
-		const business = await Business.findById(req.params.id)
+		const business = await Business.findById(id)
 
 		if (business) {
 			const alreadyReviewed = business.reviews.find(
@@ -111,7 +127,9 @@ exports.createBusinessReview = asyncHandler(async (req, res) => {
 			}
 
 			business.reviews.push(review)
+
 			business.numReviews = business.reviews.length
+
 			business.rating =
 				business -
 				reviews.reduce((acc, item) => item.rating + acc, 0) /

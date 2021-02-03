@@ -7,8 +7,24 @@ const asyncHandler = require('express-async-handler')
 
 exports.getAllRestaurants = asyncHandler(async (req, res) => {
 	try {
-		const restaurant = await Restaurant.find().populate('User')
-		res.status(200).json({ restaurant })
+		const pageSize = 10
+		const page = Number(req.query.pageNumber) || 1
+
+		const keyword = req.query.pageNumber
+			? {
+					name: {
+						$regex: req.query.keyword,
+						$options: 'i',
+					},
+			  }
+			: {}
+
+		const count = await Restaurant.countDocuments({ ...keyword })
+		const restaurants = await Restaurant.find({ ...keyword })
+			.limit(pageSize)
+			.skip(pageSize * (page - 1))
+
+		res.status(200).json({ restaurants, page, pages: Math.ceil(count / pageSize) })
 	} catch (error) {
 		res.status(400).json({ message: `${error}` })
 	}

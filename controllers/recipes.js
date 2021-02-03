@@ -7,8 +7,24 @@ const asyncHandler = require('express-async-handler')
 
 exports.getAllRecipes = asyncHandler(async (req, res) => {
 	try {
-		const recipes = await Recipe.find().populate('User')
-		res.status(200).json({ recipes })
+		const pageSize = 10
+		const page = Number(req.query.pageNumber) || 1
+
+		const keyword = req.query.pageNumber
+			? {
+					name: {
+						$regex: req.query.keyword,
+						$options: 'i',
+					},
+			  }
+			: {}
+
+		const count = await Recipe.countDocuments({ ...keyword })
+		const recipes = await Recipe.find({ ...keyword })
+			.limit(pageSize)
+			.skip(pageSize * (page - 1))
+
+		res.status(200).json({ recipes, page, pages: Math.ceil(count / pageSize) })
 	} catch (error) {
 		res.status(400).json({ message: `${error}` })
 	}
@@ -21,7 +37,7 @@ exports.getAllRecipes = asyncHandler(async (req, res) => {
 exports.getRecipe = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
-		const recipe = await Recipe.findById(id).populate('User')
+		const recipe = await Recipe.findById(id)
 		res.status(200).json({ recipe })
 	} catch (error) {
 		res.status(400).json({ message: `${error}` })

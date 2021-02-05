@@ -9,6 +9,7 @@ const path = require('path')
 const colors = require('colors')
 const cors = require('cors')
 const session = require('express-session')
+const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
 mongoose
 	.connect(process.env.DB, {
@@ -41,6 +42,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()).green
 app.use(cookieParser()).green
 app.use(logger('dev'))
+app.use(notFound)
+app.use(errorHandler)
 
 const index = require('./routes/index')
 app.use('/', index)

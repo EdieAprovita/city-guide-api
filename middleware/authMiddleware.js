@@ -20,6 +20,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
 	}
 
 	if (!token) {
-		res.status(401).json({ message: 'You cannot PASS!!' })
+		res.status(401).json({ message: 'You cannot PASS!! No authorized' })
 	}
 })

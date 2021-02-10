@@ -63,6 +63,9 @@ app.use('/api/markets', market)
 const business = require('./routes/business-routes')
 app.use('/api/businesses', business)
 
+const doctor = require('./routes/doctor-routes')
+app.use('/api/doctor', doctor)
+
 app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'))
 
 module.exports = app

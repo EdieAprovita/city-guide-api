@@ -12,16 +12,16 @@ const {
 	createRecipeReview,
 } = require('../controllers/recipes')
 
-const { protect } = '../middleware/authMiddleware'
+const { protect, admin } = '../middleware/authMiddleware'
 
 //CRUD RECIPES
 
 router.get('/', getAllRecipes)
 router.get('/:id', getRecipe)
 router.get('/top', getTopRecipes)
-router.post('/create', (protect, createRecipe))
+router.post('/create', (protect, admin, createRecipe))
 router.post('/:id/reviews', (protect, createRecipeReview))
-router.put('/edit/:id', (protect, updateRecipe))
-router.delete('/delete/:id', (protect, deleteRecipe))
+router.put('/edit/:id', (protect, admin, updateRecipe))
+router.delete('/delete/:id', (protect, admin, deleteRecipe))
 
 module.exports = router

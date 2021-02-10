@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/index.css"],"names":[],"mappings":"AAAA,KACC,eACD,CAEA,aACC,cACD","file":"main.56613cbe.chunk.css","sourcesContent":["main {\n\tmin-height: 85vh;\n}\n\n.rating span {\n\tmargin: 0.5rem 0;\n}\n"]}

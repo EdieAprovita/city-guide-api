@@ -1,33 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
-const reviewSchema = new Schema(
-	{
-		username: {
-			type: String,
-			required: [true, 'Please add a name'],
-		},
-
-		rating: {
-			type: Number,
-			required: [true, 'Please add a rating'],
-		},
-
-		comment: {
-			type: String,
-			required: [true, 'Please write a comment'],
-		},
-
-		user: {
-			type: mongoose.Schema.Types.ObjectId,
-			required: [true, 'Please add a user'],
-			ref: 'User',
-		},
-	},
-	{
-		timestamps: true,
-	}
-)
+const Review = require('./Review')
 
 const restaurantSchema = new Schema(
 	{
@@ -66,7 +39,7 @@ const restaurantSchema = new Schema(
 			enum: ['cheap', 'average', 'expensive'],
 		},
 
-		reviews: [reviewSchema],
+		reviews: [Review],
 
 		rating: {
 			type: Number,

@@ -30,31 +30,32 @@ exports.authUser = asyncHandler(async (req, res) => {
 // @access  Public
 
 exports.registerUser = asyncHandler(async (req, res) => {
-	try {
-		const { username, email, password } = req.body
+	const { name, email, password } = req.body
 
-		const userExists = await User.findOne({ email })
+	const userExists = await User.findOne({ email })
 
-		if (userExists) {
-			res.status(400).json({ message: `This user already exist ${userExists}`.red })
-		}
+	if (userExists) {
+		res.status(400)
+		throw new Error('User already exist')
+	}
 
-		const user = await User.create({
-			username,
-			email,
-			password,
+	const user = await User.create({
+		name,
+		email,
+		password,
+	})
+
+	if (user) {
+		res.status(201).json({
+			_id: user._id,
+			name: user.name,
+			email: user.email,
+			isAdmin: user.isAdmin,
+			token: generateToken(user._id),
 		})
-
-		if (user) {
-			res.status(201).json({
-				_id: user._id,
-				username: user.username,
-				email: user.email,
-				token: generateToken(user._id),
-			})
-		}
-	} catch (error) {
-		res.status(400).json({ message: `${error}`.red })
+	} else {
+		res.status(400)
+		throw new Error('Invalis user data')
 	}
 })
 
@@ -63,18 +64,18 @@ exports.registerUser = asyncHandler(async (req, res) => {
 // @access  Private
 
 exports.getUserProfile = asyncHandler(async (req, res) => {
-	try {
-		const user = await User.findById(req.user._id)
+	const user = await User.findById(req.user._id)
 
-		if (user) {
-			res.json({
-				_id: user._id,
-				username: user.username,
-				email: user.email,
-			})
-		}
-	} catch (error) {
-		res.status(400).json({ message: `${error}`.red })
+	if (user) {
+		res.status(200).json({
+			_id: user._id,
+			username: user.username,
+			email: user.email,
+			isAdmin: user.isAdmin,
+		})
+	} else {
+		res.status(404)
+		throw new Error({ message: `User not found ${Error}`.red })
 	}
 })
 
@@ -83,28 +84,28 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
 // @access  Private
 
 exports.updateUserProfile = asyncHandler(async (req, res) => {
-	try {
-		const user = await User.findById(req.user._id)
+	const user = await User.findById(req.user._id)
 
-		if (user) {
-			user.username = req.body.username || user.username
-			user.email = req.body.email || user.email
+	if (user) {
+		user.username = req.body.username || user.username
+		user.email = req.body.email || user.email
 
-			if (req.body.password) {
-				user.password = req.body.password
-			}
-
-			const updatedUser = await user.save()
-
-			res.json({
-				_id: updatedUser._id,
-				username: updatedUser.username,
-				email: updatedUser.email,
-				token: generateToken(updatedUser._id),
-			})
+		if (req.body.password) {
+			user.password = req.body.password
 		}
-	} catch (error) {
-		res.status(400).json({ message: `User not found ${error}`.red })
+
+		const updatedUser = await user.save()
+
+		res.status(200).json({
+			_id: updatedUser._id,
+			username: updatedUser.username,
+			email: updatedUser.email,
+			isAdmin: updateUser.isAdmin,
+			token: generateToken(updatedUser._id),
+		})
+	} else {
+		res.status(404)
+		throw new Error({ message: `User not found ${Error}`.red })
 	}
 })
 
@@ -165,6 +166,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
 		if (user) {
 			user.username = req.body.username || user.username
 			user.email = req.body.email || user.email
+			user.isAdmin = req.body.isAdmin
 
 			const updatedUser = await user.save()
 
@@ -172,6 +174,7 @@ exports.updateUser = asyncHandler(async (req, res) => {
 				_id: updatedUser._id,
 				username: updatedUser.username,
 				email: updatedUser.email,
+				isAdmin: updatedUser.isAdmin,
 			})
 		}
 	} catch (error) {

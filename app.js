@@ -66,6 +66,12 @@ app.use('/api/businesses', business)
 const doctor = require('./routes/doctor-routes')
 app.use('/api/doctor', doctor)
 
+const profile = require('./models/Profile')
+app.use('/api/profile', profile)
+
+const post = require('./models/Profile')
+app.use('/api/post', post)
+
 //app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'))
 
 module.exports = app

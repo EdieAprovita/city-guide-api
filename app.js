@@ -9,7 +9,6 @@ const path = require('path')
 const colors = require('colors')
 const cors = require('cors')
 const session = require('express-session')
-// const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 
 mongoose
 	.connect(process.env.DB, {

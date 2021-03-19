@@ -11,17 +11,17 @@ const {
 	updateUser,
 } = require('../controllers/auth')
 
-const { protect, admin } = require('../middleware/authMiddleware')
+const { protect } = require('../middleware/authMiddleware')
 
 //AUTH ROUTES
 
-authroutes.get('/', (protect, admin, getUsers))
+authroutes.get('/', (protect, getUsers))
 authroutes.get('/profile', (protect, getUserProfile))
-authroutes.get('/:id', (protect, admin, getUserById))
+authroutes.get('/:id', (protect, getUserById))
 authroutes.post('/signup', registerUser)
 authroutes.post('/login', authUser)
 authroutes.put('/profile', (protect, updateUserProfile))
-authroutes.put('/:id', (protect, admin, updateUser))
-authroutes.delete('/:id', (protect, admin, deleteUser))
+authroutes.put('/:id', (protect, updateUser))
+authroutes.delete('/:id', (protect, deleteUser))
 
 module.exports = authroutes

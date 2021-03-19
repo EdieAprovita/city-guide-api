@@ -12,7 +12,6 @@ const businessSchema = new Schema(
 
 		author: {
 			type: Schema.Types.ObjectId,
-			required: [true, 'There is no User'],
 			ref: 'User',
 		},
 

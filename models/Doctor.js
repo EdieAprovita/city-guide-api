@@ -12,7 +12,6 @@ const doctorSchema = new Schema(
 
 		author: {
 			type: Schema.Types.ObjectId,
-			required: [true, 'There is no User'],
 			ref: 'User',
 		},
 
@@ -37,13 +36,11 @@ const doctorSchema = new Schema(
 
 				facebook: {
 					type: String,
-					required: [true, 'Add Facebook'],
 					unique: [true, 'This facebook is already in use'],
 				},
 
 				instagram: {
 					type: String,
-					required: [true, 'Add instagram'],
 					unique: [true, 'This instagram is already in use'],
 				},
 			},

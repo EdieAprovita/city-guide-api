@@ -11,7 +11,7 @@ const {
 	createRestaurantReview,
 } = require('../controllers/restaurants')
 
-const { protect, admin } = '../middleware/authMiddleware'
+const { protect } = '../middleware/authMiddleware'
 
 //CRUD RESTAURANTS
 
@@ -19,8 +19,8 @@ router.get('/', getAllRestaurants)
 router.get('/:id', getRestaurant)
 router.get('/top', getTopRestaurants)
 router.post('/:id/reviews', (protect, createRestaurantReview))
-router.post('/create', (protect, admin, createRestaurant))
-router.put('/edit/:id', (protect, admin, updateRestaurant))
-router.delete('/delete/:id', (protect, admin, deleteRestaurant))
+router.post('/create', (protect, createRestaurant))
+router.put('/edit/:id', (protect, updateRestaurant))
+router.delete('/delete/:id', (protect, deleteRestaurant))
 
 module.exports = router

@@ -1,6 +1,5 @@
 const router = require('express').Router()
 
-const { deleteBusiness } = require('../controllers/business')
 const {
 	getAllDoctors,
 	getDoctor,
@@ -11,16 +10,16 @@ const {
 	getTopDoctor,
 } = require('../controllers/doctors')
 
-const { protect, admin } = require('../middleware/authMiddleware')
+const { protect } = require('../middleware/authMiddleware')
 
 //CRUD DOCTOR
 
 router.get('/', getAllDoctors)
 router.get('/top', getTopDoctor)
 router.get('/:id', getDoctor)
-router.post('/create', (protect, admin, createDoctor))
+router.post('/create', (protect, createDoctor))
 router.post('/:id/reviews', (protect, createDoctorReview))
-router.put('/edit/:id', (protect, admin, updateDoctor))
-router.delete('/delete/:id', (protect, admin, deleteBusiness))
+router.put('/edit/:id', (protect, updateDoctor))
+router.delete('/delete/:id', (protect, deleteDoctor))
 
 module.exports = router

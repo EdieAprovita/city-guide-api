@@ -36,8 +36,7 @@ exports.getAllBusiness = asyncHandler(async (req, res) => {
 
 exports.getBusiness = asyncHandler(async (req, res) => {
 	try {
-		const { id } = req.params
-		const business = await Business.findById(id)
+		const business = await Business.findById(req.params._id)
 		res.status(200).json({ business })
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
@@ -71,9 +70,8 @@ exports.createBusiness = asyncHandler(async (req, res) => {
 
 exports.updateBusiness = asyncHandler(async (req, res) => {
 	try {
-		const { id } = req.params
 		const { name, address, contact, budget, typeBusiness } = req.body
-		const business = await Business.findByIdAndUpdate(id, {
+		const business = await Business.findByIdAndUpdate(req.params._id, {
 			name,
 			address,
 			contact,
@@ -92,8 +90,7 @@ exports.updateBusiness = asyncHandler(async (req, res) => {
 
 exports.deleteBusiness = asyncHandler(async (req, res) => {
 	try {
-		const { id } = req.params
-		await Business.findByIdAndDelete(id)
+		await Business.findByIdAndDelete(req.params._id)
 		res.status(200).json({ message: 'Deleted Business' })
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
@@ -106,9 +103,9 @@ exports.deleteBusiness = asyncHandler(async (req, res) => {
 
 exports.createBusinessReview = asyncHandler(async (req, res) => {
 	try {
-		const { rating, comment, id } = req.body
+		const { rating, comment, _id } = req.body
 
-		const business = await Business.findById(id)
+		const business = await Business.findById(_id)
 
 		if (business) {
 			const alreadyReviewed = business.reviews.find(

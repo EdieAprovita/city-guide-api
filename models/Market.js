@@ -13,7 +13,6 @@ const marketSchema = new Schema(
 		author: {
 			type: {
 				type: Schema.Types.ObjectId,
-				required: [true, 'There is no User'],
 				ref: 'User',
 			},
 		},

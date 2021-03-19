@@ -11,7 +11,7 @@ const {
 	getTopMarkets,
 } = require('../controllers/markets')
 
-const { protect, admin } = '../middleware/authMiddleware'
+const { protect } = '../middleware/authMiddleware'
 
 //CRUD MARKETS
 
@@ -19,8 +19,8 @@ router.get('/', getAllMarkets)
 router.get('/:id', getMarket)
 router.get('/top', getTopMarkets)
 router.post('/:id/reviews', (protect, createMarketReview))
-router.post('/create', (protect, admin, createMarket))
-router.put('/edit/:id', (protect, admin, updateMarket))
-router.delete('/delete/:id', (protect, admin, deleteMarket))
+router.post('/create', (protect, createMarket))
+router.put('/edit/:id', (protect, updateMarket))
+router.delete('/delete/:id', (protect, deleteMarket))
 
 module.exports = router

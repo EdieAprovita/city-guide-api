@@ -61,6 +61,7 @@ const businessSchema = new Schema(
 		},
 
 		reviews: [Review],
+
 		rating: {
 			type: Number,
 			required: [true, 'Please add the rating'],
@@ -78,5 +79,4 @@ const businessSchema = new Schema(
 	}
 )
 
-const Business = mongoose.model('Business', businessSchema)
-module.exports = Business
+module.exports = Business = mongoose.model('Business', businessSchema)

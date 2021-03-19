@@ -21,7 +21,7 @@ exports.authUser = asyncHandler(async (req, res) => {
 		})
 	} else {
 		res.status(401)
-		throw new Error('Invalid email or password')
+		throw new Error({ message: `${Error}`.red })
 	}
 })
 
@@ -30,17 +30,17 @@ exports.authUser = asyncHandler(async (req, res) => {
 // @access  Public
 
 exports.registerUser = asyncHandler(async (req, res) => {
-	const { name, email, password } = req.body
+	const { username, email, password } = req.body
 
 	const userExists = await User.findOne({ email })
 
 	if (userExists) {
 		res.status(400)
-		throw new Error('User already exist')
+		throw new Error('User already exist'.blue.bold)
 	}
 
 	const user = await User.create({
-		name,
+		username,
 		email,
 		password,
 	})
@@ -48,14 +48,14 @@ exports.registerUser = asyncHandler(async (req, res) => {
 	if (user) {
 		res.status(201).json({
 			_id: user._id,
-			name: user.name,
+			name: user.username,
 			email: user.email,
 			isAdmin: user.isAdmin,
 			token: generateToken(user._id),
 		})
 	} else {
 		res.status(400)
-		throw new Error('Invalis user data')
+		throw new Error({ message: `${Error}`.red })
 	}
 })
 
@@ -67,12 +67,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.user._id)
 
 	if (user) {
-		res.status(200).json({
-			_id: user._id,
-			username: user.username,
-			email: user.email,
-			isAdmin: user.isAdmin,
-		})
+		res.status(200).json({ user })
 	} else {
 		res.status(404)
 		throw new Error({ message: `User not found ${Error}`.red })
@@ -116,7 +111,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 exports.getUsers = asyncHandler(async (req, res) => {
 	try {
 		const users = await User.find({})
-		res.status(200).json(users)
+		res.status(200).json(users.blue.bold)
 	} catch (error) {
 		res.status(400).json({ message: `${error}`.red })
 	}
@@ -132,7 +127,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
 		if (user) {
 			await user.remove()
-			res.status(200).json({ message: 'User removed' })
+			res.status(200).json({ message: 'User removed'.blue.bold })
 		}
 	} catch (error) {
 		res.status(404).json({ message: `${error}`.red })
@@ -148,7 +143,7 @@ exports.getUserById = asyncHandler(async (req, res) => {
 		const user = await User.findById(req.params.id).select('-password')
 
 		if (user) {
-			res.status(200).json(user)
+			res.status(200).json(user.blue.bold)
 		}
 	} catch (error) {
 		res.status(404).json({ message: `${error}`.red })

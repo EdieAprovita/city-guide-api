@@ -53,5 +53,4 @@ const marketSchema = new Schema(
 	}
 )
 
-const Market = mongoose.model('Market', marketSchema)
-module.exports = Market
+module.exports = Market = mongoose.model('Market', marketSchema)

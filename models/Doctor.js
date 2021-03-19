@@ -50,6 +50,7 @@ const doctorSchema = new Schema(
 		],
 
 		reviews: [Review],
+
 		rating: {
 			type: Number,
 			required: [true, 'Please add the rating'],
@@ -67,5 +68,4 @@ const doctorSchema = new Schema(
 	}
 )
 
-const Doctor = mongoose.model('Doctor', doctorSchema)
-module.exports = Doctor
+module.exports = Doctor = mongoose.model('Doctor', doctorSchema)

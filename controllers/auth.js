@@ -94,7 +94,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 			_id: updatedUser._id,
 			username: updatedUser.username,
 			email: updatedUser.email,
-			isAdmin: updateUser.isAdmin,
+			isAdmin: updatedUser.isAdmin,
 			token: generateToken(updatedUser._id),
 		})
 	} else {

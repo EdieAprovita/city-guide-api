@@ -16,12 +16,20 @@ exports.protect = asyncHandler(async (req, res, next) => {
 			next()
 		} catch (error) {
 			console.error(error)
-			res.status(401).json({ message: 'You cannot PASS!!' })
+			res.status(401).json({ message: 'You cannot PASS!! Not authorized' })
 		}
 	}
 
 	if (!token) {
-		res.status(401).json({ message: 'You cannot PASS!! No authorized' })
+		res.status(401).json({ message: 'You cannot PASS!! Not a valid token' })
 	}
 })
 
+exports.admin = (req, res, next) => {
+	if (req.user & req.user.isAdmin) {
+		next()
+	} else {
+		res.status(401)
+		throw new Error('Not authorized as an Admin')
+	}
+}

@@ -1,4 +1,4 @@
-const authroutes = require('express').Router()
+const router = require('express').Router()
 
 const {
 	authUser,
@@ -11,17 +11,17 @@ const {
 	updateUser,
 } = require('../controllers/auth')
 
-const { protect } = require('../middleware/authMiddleware')
+const { protect, admin } = require('../middleware/authMiddleware')
 
 //AUTH ROUTES
 
-authroutes.get('/', (protect, getUsers))
-authroutes.get('/profile', (protect, getUserProfile))
-authroutes.get('/:id', (protect, getUserById))
-authroutes.post('/signup', registerUser)
-authroutes.post('/login', authUser)
-authroutes.put('/profile', (protect, updateUserProfile))
-authroutes.put('/:id', (protect, updateUser))
-authroutes.delete('/:id', (protect, deleteUser))
+router.get('/', protect, admin, getUsers)
+router.get('/profile', protect, getUserProfile)
+router.get('/:id', protect, admin, getUserById)
+router.post('/signup', registerUser)
+router.post('/login', authUser)
+router.put('/profile/updateMe', protect, updateUserProfile)
+router.put('/update/:id', protect, admin, updateUser)
+router.delete('/delete/:id', protect, admin, deleteUser)
 
-module.exports = authroutes
+module.exports = router

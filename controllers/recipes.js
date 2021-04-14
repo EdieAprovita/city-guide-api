@@ -78,7 +78,7 @@ exports.createRecipe = asyncHandler(async (req, res) => {
 
 		res.status(201).json({ recipe })
 	} catch (error) {
-		res.status(400).json({ message: `${error}` })
+		res.status(400).json({ message: `${error}`.red })
 	}
 })
 

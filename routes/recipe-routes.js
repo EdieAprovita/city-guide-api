@@ -1,6 +1,4 @@
-const express = require('express')
-const router = express.Router()
-const { getTopMarkets } = require('../controllers/markets')
+const router = require('express').Router()
 
 const {
 	getAllRecipes,
@@ -12,16 +10,16 @@ const {
 	createRecipeReview,
 } = require('../controllers/recipes')
 
-const { protect } = '../middleware/authMiddleware'
+const { protect } = require('../middleware/authMiddleware')
 
 //CRUD RECIPES
 
 router.get('/', getAllRecipes)
 router.get('/:id', getRecipe)
 router.get('/top', getTopRecipes)
-router.post('/create', (protect, createRecipe))
-router.post('/:id/reviews', (protect, createRecipeReview))
-router.put('/edit/:id', (protect, updateRecipe))
-router.delete('/delete/:id', (protect, deleteRecipe))
+router.post('/create', protect, createRecipe)
+router.post('/:id/reviews', protect, createRecipeReview)
+router.put('/edit/:id', protect, updateRecipe)
+router.delete('/delete/:id', protect, deleteRecipe)
 
 module.exports = router

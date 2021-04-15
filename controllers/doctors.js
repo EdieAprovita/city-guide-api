@@ -102,8 +102,8 @@ exports.deleteDoctor = asyncHandler(async (req, res) => {
 
 exports.createDoctorReview = asyncHandler(async (req, res) => {
 	try {
-		const { rating, comment, id } = req.body
-		const doctor = await Doctor.findById(id)
+		const { rating, comment } = req.body
+		const doctor = await Doctor.findById(req.params.id)
 
 		if (doctor) {
 			const alreadyReviewed = doctor.reviews.find(

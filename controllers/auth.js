@@ -122,7 +122,7 @@ exports.getUsers = asyncHandler(async (req, res) => {
 
 exports.deleteUser = asyncHandler(async (req, res) => {
 	try {
-		const user = await User.findById(req.params._id)
+		const user = await User.findById(req.params.id)
 
 		if (user) {
 			await user.remove()
@@ -139,7 +139,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
 exports.getUserById = asyncHandler(async (req, res) => {
 	try {
-		const user = await User.findById(req.params._id).select('-password')
+		const user = await User.findById(req.params.id).select('-password')
 
 		if (user) {
 			res.status(200).json(user.blue.bold)
@@ -155,7 +155,7 @@ exports.getUserById = asyncHandler(async (req, res) => {
 
 exports.updateUser = asyncHandler(async (req, res) => {
 	try {
-		const user = await User.findById(req.params._id)
+		const user = await User.findById(req.params.id)
 
 		if (user) {
 			user.username = req.body.username || user.username

@@ -20,6 +20,11 @@ const doctorSchema = new Schema(
 			required: [true, 'Add the address'],
 		},
 
+		image: {
+			type: String,
+			required: [true, 'Add picture'],
+		},
+
 		contact: [
 			{
 				phone: {

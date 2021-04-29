@@ -20,7 +20,7 @@ const restaurantSchema = new Schema(
 		typePlace: {
 			type: String,
 			required: [true, 'Please specify the type place'],
-			enum: ['Restaurante', 'Puesto Callejero'],
+			enum: ['Local', 'Puesto Callejero'],
 		},
 
 		address: {
@@ -28,7 +28,7 @@ const restaurantSchema = new Schema(
 			required: [true, 'Please type de address'],
 		},
 
-		imgUrl: {
+		image: {
 			type: String,
 			required: [true, 'Please add a photo'],
 		},
@@ -38,6 +38,26 @@ const restaurantSchema = new Schema(
 			required: [true, 'Add the budget'],
 			enum: ['cheap', 'average', 'expensive'],
 		},
+
+		contact: [
+			{
+				phone: {
+					type: Number,
+					require: [true, 'Write a phone number'],
+					unique: [true, 'This phone number is already in use'],
+				},
+
+				facebook: {
+					type: String,
+					unique: [true, 'This facebook is already in use'],
+				},
+
+				instagram: {
+					type: String,
+					unique: [true, 'This instagram is already in use'],
+				},
+			},
+		],
 
 		reviews: [Review],
 

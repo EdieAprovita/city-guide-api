@@ -39,8 +39,8 @@ const recipeSchema = new Schema(
 			required: [true, 'Write the type of dish please'],
 		},
 
-		imgUrl: {
-			type: [String],
+		image: {
+			type: String,
 			required: [true, 'Add and image for the recipe'],
 		},
 

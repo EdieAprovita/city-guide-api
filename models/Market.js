@@ -22,10 +22,9 @@ const marketSchema = new Schema(
 			required: [true, 'Please add and address'],
 		},
 
-		typeMarket: {
+		image: {
 			type: String,
-			required: [true, 'Please add a type of market'],
-			enum: ['Mercado', 'Local', 'Mercado Local'],
+			required: [true, 'Add picture'],
 		},
 
 		reviews: [Review],

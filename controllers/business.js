@@ -49,10 +49,19 @@ exports.getBusiness = asyncHandler(async (req, res) => {
 
 exports.createBusiness = asyncHandler(async (req, res) => {
 	try {
-		const { name, address, contact, budget, typeBusiness, numReviews } = req.body
+		const {
+			name,
+			address,
+			contact,
+			image,
+			budget,
+			typeBusiness,
+			numReviews,
+		} = req.body
 		const business = await Business.create({
 			name,
 			address,
+			image,
 			contact,
 			budget,
 			typeBusiness,
@@ -70,10 +79,11 @@ exports.createBusiness = asyncHandler(async (req, res) => {
 
 exports.updateBusiness = asyncHandler(async (req, res) => {
 	try {
-		const { name, address, contact, budget, typeBusiness } = req.body
+		const { name, address, image, contact, budget, typeBusiness } = req.body
 		const business = await Business.findByIdAndUpdate(req.params.id, {
 			name,
 			address,
+			image,
 			contact,
 			budget,
 			typeBusiness,

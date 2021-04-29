@@ -50,10 +50,11 @@ exports.getDoctor = asyncHandler(async (req, res) => {
 
 exports.createDoctor = asyncHandler(async (req, res) => {
 	try {
-		const { name, address, contact, numReviews } = req.body
+		const { name, address, image, contact, numReviews } = req.body
 		const doctor = await Doctor.create({
 			name,
 			address,
+			image,
 			contact,
 			numReviews,
 		})
@@ -70,10 +71,11 @@ exports.createDoctor = asyncHandler(async (req, res) => {
 exports.updateDoctor = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.params
-		const { name, address, contact } = req.body
+		const { name, image, address, contact } = req.body
 		const doctor = await Doctor.findByIdAndUpdate(id, {
 			name,
 			address,
+			image,
 			contact,
 		})
 		res.status(200).json({ doctor })

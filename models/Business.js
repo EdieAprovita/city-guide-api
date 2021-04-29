@@ -20,6 +20,11 @@ const businessSchema = new Schema(
 			required: [true, 'Add the address'],
 		},
 
+		image: {
+			type: String,
+			required: [true, 'Add picture'],
+		},
+
 		contact: [
 			{
 				phone: {
@@ -36,13 +41,11 @@ const businessSchema = new Schema(
 
 				facebook: {
 					type: String,
-					required: [true, 'Add Facebook'],
 					unique: [true, 'This facebook is already in use'],
 				},
 
 				instagram: {
 					type: String,
-					required: [true, 'Add instagram'],
 					unique: [true, 'This instagram is already in use'],
 				},
 			},
@@ -56,7 +59,7 @@ const businessSchema = new Schema(
 		typeBusiness: {
 			type: String,
 			required: [true, 'Add type of business'],
-			enum: ['Store', 'Food', 'Service'],
+			enum: ['Store', 'Service'],
 		},
 
 		reviews: [Review],
